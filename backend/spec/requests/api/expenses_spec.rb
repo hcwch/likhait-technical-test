@@ -5,8 +5,8 @@ RSpec.describe "Api::Expenses", type: :request do
   let!(:transport_category) { Category.create!(name: "Transport") }
 
   describe "GET /api/expenses" do
-  let!(:expense1) { Expense.create!(description: "Lunch", amount: 100.00, category: food_category, date: Date.today) }
-  let!(:expense2) { Expense.create!(description: "Taxi", amount: 50.00, category: transport_category, date: Date.today) }
+    let!(:expense1) { Expense.create!(description: "Lunch", amount: 100.00, category: food_category, date: Date.today, created_at: 1.hour.ago) }
+    let!(:expense2) { Expense.create!(description: "Taxi", amount: 50.00, category: transport_category, date: Date.yesterday, created_at: 45.minutes.ago) }
 
     it "returns all expenses with category information" do
       get "/api/expenses"
@@ -16,12 +16,25 @@ RSpec.describe "Api::Expenses", type: :request do
       expect(json.length).to eq(2)
     end
 
-    it "returns expenses in descending order by created_at" do
+    it "returns expenses in descending order by expense date" do
       get "/api/expenses"
 
       json = JSON.parse(response.body)
-      expect(json.first["id"]).to eq(expense2.id)
-      expect(json.last["id"]).to eq(expense1.id)
+      expect(json.first["id"]).to eq(expense1.id)
+      expect(json.last["id"]).to eq(expense2.id)
+    end
+
+    context "when expenses share the same Expense date" do
+      let!(:earlier_recorded) { Expense.create!(description: "Groceries", amount: 30.00, category: food_category, date: Date.today, created_at: 2.hours.ago) }
+      let!(:later_recorded) { Expense.create!(description: "Coffee", amount: 5.00, category: food_category, date: Date.today, created_at: 30.minutes.ago) }
+
+      it "returns the most recently recorded expense first" do
+        get "/api/expenses"
+
+        json = JSON.parse(response.body)
+        positions = json.each_with_index.to_h { |expense, index| [ expense["id"], index ] }
+        expect(positions[later_recorded.id]).to be < positions[earlier_recorded.id]
+      end
     end
   end
 
