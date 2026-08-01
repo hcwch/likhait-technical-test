@@ -56,6 +56,12 @@ export function useExpenseForm({ initialData, onSubmit }: UseExpenseFormProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Portaled forms rendered inside this form's tree (e.g. the Add Category
+    // modal) bubble their submit events here via React's tree-based propagation.
+    if (e.target !== e.currentTarget) {
+      return;
+    }
+
     if (!validateForm()) {
       return;
     }

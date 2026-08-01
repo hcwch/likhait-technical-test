@@ -8,6 +8,7 @@ import { COLORS } from "../constants/colors";
 interface SelectBoxProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   label?: string;
   error?: string;
+  hideErrorText?: boolean;
   fullWidth?: boolean;
   options: Array<{ value: string; label: string }>;
 }
@@ -15,6 +16,7 @@ interface SelectBoxProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
 export function SelectBox({
   label,
   error,
+  hideErrorText = false,
   fullWidth = false,
   options,
   ...props
@@ -61,7 +63,7 @@ export function SelectBox({
           </option>
         ))}
       </select>
-      {error && <span style={errorStyle}>{error}</span>}
+      {!hideErrorText && error && <span style={errorStyle}>{error}</span>}
     </div>
   );
 }
