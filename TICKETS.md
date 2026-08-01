@@ -46,28 +46,3 @@ Users should be able to create new categories through the UI with the following 
 ### 🎬 Steps to Reproduce
 
 N/A - Feature doesn't exist yet
-
----
-
-## BONUS-001: Prevent Future Date Expense Creation
-
-## 📝 Summary
-
-Add validation to prevent users from creating expenses with dates in the future. Users should only be able to add expenses for today or past dates.
-
-### 🔍 Actual Behavior
-
-Users can select any date in the future when creating an expense, which doesn't make sense for expense tracking (you can't have spent money on a future date).
-
-### 🎯 Expected Behavior
-
-The date picker in the expense form should:
-
-1. Prevent selection of future dates
-2. Default to today's date
-3. Show a validation error if user manually enters a future date
-4. Display a helpful error message explaining the restriction
-
-### 🎬 Steps to Reproduce
-
-N/A - Feature doesn't exist yet

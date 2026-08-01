@@ -21,7 +21,9 @@ module Backend
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
-    # config.time_zone = "Central Time (US & Canada)"
+    # Easternmost timezone on Earth (UTC+14). Keeps the server's date ahead of every real client's local date, so the
+    config.time_zone = "Pacific/Kiritimati"
+
     # config.eager_load_paths << Rails.root.join("extras")
 
     # Only loads a smaller set of middleware suitable for API only apps.
