@@ -15,7 +15,8 @@ categories = [
   'Education',
   'Travel',
   'Personal',
-  'Other'
+  'Other',
+  Category::UNCATEGORIZED_NAME
 ]
 
 created_categories = categories.map do |cat_name|

@@ -79,6 +79,45 @@ export async function createCategory(name: string): Promise<Category> {
 }
 
 /**
+ * Rename a category
+ */
+export async function updateCategory(
+  id: number,
+  name: string,
+): Promise<Category> {
+  const response = await fetch(`${API_BASE_URL}/categories/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ category: { name } }),
+  });
+
+  if (!response.ok) {
+    const body = await response.json().catch(() => null);
+    const errors = Array.isArray(body?.errors) ? body.errors : [];
+    throw new ApiError(errors);
+  }
+
+  return response.json();
+}
+
+/**
+ * Delete a category (its expenses move to the fallback category)
+ */
+export async function deleteCategory(id: number): Promise<void> {
+  const response = await fetch(`${API_BASE_URL}/categories/${id}`, {
+    method: "DELETE",
+  });
+
+  if (!response.ok) {
+    const body = await response.json().catch(() => null);
+    const errors = Array.isArray(body?.errors) ? body.errors : [];
+    throw new ApiError(errors);
+  }
+}
+
+/**
  * Create a new expense
  */
 export async function createExpense(data: ExpenseFormData): Promise<Expense> {
