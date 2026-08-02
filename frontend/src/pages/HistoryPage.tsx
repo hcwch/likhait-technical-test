@@ -8,6 +8,7 @@ import { CalendarExpenseTable } from "../components/CalendarExpenseTable";
 import { ExpenseForm } from "../components/ExpenseForm";
 import { Modal, Button } from "../vibes";
 import { COLORS } from "../constants/colors";
+import { UNCATEGORIZED_CATEGORY_NAME } from "../constants/categoryNames";
 
 const HistoryPage: React.FC = () => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
@@ -85,7 +86,7 @@ const HistoryPage: React.FC = () => {
   // Calculate category breakdown
   const categoryData = expenses.reduce(
     (acc, expense) => {
-      const category = expense.category || "Uncategorized";
+      const category = expense.category || UNCATEGORIZED_CATEGORY_NAME;
       if (!acc[category]) {
         acc[category] = { category, amount: 0, count: 0 };
       }
