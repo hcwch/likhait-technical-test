@@ -14,8 +14,8 @@ export function calculateTotal(expenses: Expense[]): number {
 /**
  * Format currency amount
  */
-export function formatCurrency(amount: number): string {
-  return `$${amount.toFixed(2)}`;
+export function formatCurrency(amount: number | string): string {
+  return `$${Number(amount).toFixed(2)}`;
 }
 
 /**

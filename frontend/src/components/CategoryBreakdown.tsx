@@ -21,8 +21,8 @@ const CategoryBreakdown: React.FC<CategoryBreakdownProps> = ({
 }) => {
   const [isCollapsed, setIsCollapsed] = React.useState(true);
 
-  const formatAmount = (amount: number) => {
-    return `$${amount.toFixed(2)}`;
+  const formatAmount = (amount: number | string) => {
+    return `$${Number(amount).toFixed(2)}`;
   };
 
   const containerStyle: React.CSSProperties = {
