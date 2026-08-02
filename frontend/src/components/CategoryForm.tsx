@@ -10,9 +10,10 @@ import { TextField, Button, Modal } from "../vibes";
 
 interface CategoryFormProps {
   onCreated: (category: Category) => void;
+  variant?: "primary" | "secondary";
 }
 
-export function CategoryForm({ onCreated }: CategoryFormProps) {
+export function CategoryForm({ onCreated, variant = "secondary" }: CategoryFormProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [name, setName] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -67,7 +68,7 @@ export function CategoryForm({ onCreated }: CategoryFormProps) {
 
   return (
     <>
-      <Button type="button" variant="secondary" onClick={open}>
+      <Button type="button" variant={variant} onClick={open}>
         Add Category
       </Button>
       {isOpen &&
